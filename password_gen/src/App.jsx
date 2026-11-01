@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import './App.css'
 
 function App() {
@@ -7,6 +7,9 @@ function App() {
   const [charAllowed, setCharAllowed] = useState(false)
   const [password, setPassword] = useState("")
 
+  //ref hook
+  const passwordRef = useRef(null)
+
   const passwordGenerator = useCallback(() => {
     // Password generation logic here
     let pass = ""
@@ -14,14 +17,24 @@ function App() {
     if(numAllowed) str += "0123456789"
     if(charAllowed) str += "!@#$%^&*()_+~`|}{[]:;?><,./-="
 
-    for(i = 1; i <= length; i++){
+    for(let i = 1; i <= length; i++){
       let char = Math.floor(Math.random() * str.length + 1)
-      pass += strcharAt(char)
+      pass += str.charAt(char)
     }
 
     setPassword(pass)
 
   }, [length, numAllowed, charAllowed, setPassword]) 
+
+  const copyPassword = useCallback(() => {
+    passwordRef.current?.select()
+    passwordRef.current?.setSelectionRange(0,90)// for mobile devices sirf unte hi character select hote hai
+    window.navigator.clipboard.writeText(password)
+  },
+  [password])
+  useEffect(() => {
+    passwordGenerator()
+  }, [length, numAllowed, charAllowed, passwordGenerator])
 
   return (
     <>
@@ -35,8 +48,10 @@ function App() {
         className ="outline-none w-full py-1 px-3 text-black"
         placeholder = "Password"
         readOnly
+        ref = {passwordRef}
         />
-        <button className = "bg-yellow-400 px-3 py-1 text-black font-semibold hover:bg-yellow-500 transition-colors duration-300">
+        <button onClick={copyPassword}
+        className = "bg-yellow-400 px-3 py-1 text-black font-semibold hover:bg-yellow-500 transition-colors duration-300">
           copy
         </button>
       </div>
@@ -45,7 +60,7 @@ function App() {
           <input
           type = "range"
           min = {6}
-          max = {50}
+          max = {20}
           value = {length}
           className = "cursor-pointer"
           onChange = {(e) => setLength(e.target.value)}
