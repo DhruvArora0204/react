@@ -1,0 +1,33 @@
+Creating react app:
+1) npx ke through : npx create-react-app <name>
+2) vite krna hai toh : npm create vite@latest
+
+
+package.json:
+start- dev env mein chalane ke liye
+build -  prod env mein krne ke liye
+test- run test cases
+eject- koi aur kaam
+
+package-lock.json
+issme kuch change nhi krte hai
+
+index.html ek hi hota hai 
+
+jsx mein html likh skte hai using custom tags
+jsx mein ek hi element use kr sakte hai (round about div hai)
+toh ek fragment return krdo (<> .... </>)
+ek fragment ke andar multiple tags ho skte hai
+
+//hooks ka kya kaam hai
+to update variables. or update data jaise eg, counter mein update hua but site pr nhi toh use hooks
+
+import { useState } from 'react' //hook idhar hai 
+
+
+
+tailwind - utility first CSS framework
+
+npm install tailwindcss @tailwindcss/vite
+
+props -  banata hai components resuable 
